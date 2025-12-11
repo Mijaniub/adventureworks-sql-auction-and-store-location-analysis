@@ -1,5 +1,7 @@
 # adventureworks-sql-auction-and-store-location-analysis
 SQL-based project implementing an online auction system for inventory clearance and a data-driven analysis to recommend new retail store locations for Adventure Works Bicycles.
+
+
 ![SQL Badge](https://img.shields.io/badge/Made%20with-SQL-blue)
 ![Database](https://img.shields.io/badge/Database-AdventureWorks2014-green)
 ![Status](https://img.shields.io/badge/Project-Completed-success)
