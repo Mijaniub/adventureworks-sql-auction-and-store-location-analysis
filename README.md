@@ -1,6 +1,9 @@
-# adventureworks-sql-auction-and-store-location-analysis
-SQL-based project implementing an online auction system for inventory clearance and a data-driven analysis to recommend new retail store locations for Adventure Works Bicycles.
+<p align="center">
+  <img src="banner/cover.png" alt="Project Banner" width="100%">
+</p>
 
+# Adventure Works SQL Project  
+### **Auction System for Stock Clearance & Store Location Recommendation**
 
 ![SQL Badge](https://img.shields.io/badge/Made%20with-SQL-blue)
 ![Database](https://img.shields.io/badge/Database-AdventureWorks2014-green)
@@ -8,122 +11,177 @@ SQL-based project implementing an online auction system for inventory clearance 
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Contributions](https://img.shields.io/badge/Contributions-Welcome-orange)
 
-📌 Project Overview
+---
 
-Adventure Works Bicycles is a global manufacturer and seller of bicycles, accessories, and apparel. Despite strong online sales, the company faces:
+## 📌 **Project Overview**
 
-1️⃣ Stock Clearance Issue
+This repository contains a complete SQL-based solution for two real-world business challenges faced by **Adventure Works Bicycles**:
 
-Old bicycle models remain unsold before new model launches, affecting logistics and storage.
-➡️ Solution: Build an online auction system inside the existing database to clear stock efficiently.
+### ✅ **1. Online Auction System for Stock Clearance**  
+A SQL-driven auction platform to clear old inventory before new model releases.
 
-2️⃣ Retail Store Expansion Challenge
+### ✅ **2. Store Location Recommendation Analysis**  
+A data-driven analysis identifying the best two U.S. cities to open new physical retail stores—while avoiding conflict with top wholesale partners.
 
-Adventure Works wants to open new physical stores but must avoid harming relationships with top wholesale partners.
-➡️ Solution: Analyze individual customer sales and exclude top 30 wholesale customer cities to identify suitable store locations.
+These solutions were implemented using **T-SQL** on the **AdventureWorks2014** database.
 
-🔧 Part 1 — Auction System (SQL Implementation)
-📌 Business Logic
+---
 
-Only active products (not discontinued and no end date) can enter auctions
+## 🏗️ **Project Architecture**
 
-Initial Bid Price:
+adventureworks-sql-auction-and-store-location-analysis/
+│
+├── src/
+│ ├── auction/
+│ │ ├── create-auction-tables.sql
+│ │ ├── insert-default-config.sql
+│ │ ├── uspAddProductToAuction.sql
+│ │ ├── uspTryBidProduct.sql
+│ │ ├── uspRemoveProductFromAuction.sql
+│ │ ├── uspListBidsOffersHistory.sql
+│ │ └── uspUpdateProductAuctionStatus.sql
+│ │
+│ └── store-location/
+│ ├── top-30-wholesale-customers.sql
+│ ├── remove-excluded-cities.sql
+│ ├── individual-sales-by-city.sql
+│ └── final-city-recommendation.sql
+│
+├── report/
+│ └── Project-Report.pdf
+│
+├── banner/
+│ └── cover.png
+│
+├── LICENSE
+├── README.md
+└── .gitignore
 
-50% of list price for manufactured products
+markdown
+Copy code
 
-75% for vendor-supplied products
+---
 
-Minimum bid increment: €0.05
+# 🚀 **1. Auction System (SQL Implementation)**
 
-Max bid cannot exceed 100% of list price
+### 🎯 **Goal**  
+Clear slow-moving inventory using an interactive bidding process built entirely with SQL.
 
-Rules stored in Auction.Config for easy updates
+### 🧩 **Core Logic**
+- Only active products (not discontinued) can be auctioned  
+- Initial bid price determined by product type:
+  - 50% of list price for in-house manufactured products  
+  - 75% of list price for vendor-supplied items  
+- Minimum increment: **€0.05**  
+- Maximum bid = 100% of list price  
+- Configurable through the `Auction.Config` table  
+- Bid history preserved permanently  
+- Modular, maintainable SQL schema
 
-📁 Database Structure
+### 🗄️ **Database Components**
+- `Auction.Config`  
+- `Auction.Products`  
+- `Auction.Bids`  
+- Stored procedures for:
+  - Adding products to auction  
+  - Placing bids  
+  - Canceling auctions  
+  - Listing bid history  
+  - Updating auction status  
 
-A new schema Auction was added with tables:
+---
 
-Table	Purpose
-Auction.Config	Stores global auction rules (min increment, max multiplier)
-Auction.Products	Tracks products listed for auction
-Auction.Bids	Stores bid history & customer participation
-⚙️ Stored Procedures Implemented
+# 🌎 **2. Store Location Recommendation**
 
-uspAddProductToAuction
+### 🎯 **Objective**  
+Select the best 2 U.S. cities for new physical stores **without competing** with top wholesale partners.
 
-uspTryBidProduct
+### 🧠 **Approach**
+1. Identify Top 30 wholesale customers by revenue  
+2. Extract their cities → **Exclusion list**  
+3. Analyze remaining cities for individual customer sales  
+4. Rank all remaining cities by total sales  
+5. Choose the top-performing valid locations
 
-uspRemoveProductFromAuction
+### 🏬 **Final Recommendations**
+Based on geographic coverage, customer demand, and strategic value:
 
-uspListBidsOffersHistory
+- **Denver, Colorado**  
+- **Raleigh, North Carolina**
 
-uspUpdateProductAuctionStatus
+---
 
-All procedures include input validation and TRY/CATCH error handling.
+# 🛠️ **How to Run This Project**
 
-📊 Part 2 — Store Location Recommendation
-📌 Step 1: Excluding Top 30 Wholesale Cities
+## **Prerequisites**
+- SQL Server (2016 or later recommended)
+- SQL Server Management Studio (SSMS) or Azure Data Studio
+- AdventureWorks2014 sample database  
+  Download link:  
+  https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
 
-Identify top 30 wholesale customers by total revenue
+## **Setup Steps**
+1. Install the AdventureWorks database  
+2. Clone this repository:
+   ```bash
+   git clone https://github.com/Mijaniub/adventureworks-sql-auction-and-store-location-analysis.git
+Open the .sql files in src/
 
-Extract their cities
+Run the scripts in this order:
 
-Exclude these cities from store consideration
+🧩 Auction System
+create-auction-tables.sql
 
-📌 Step 2: Analyzing Remaining Cities
+insert-default-config.sql
 
-Filter only individual customers (PersonType = 'IN')
+Stored procedures (all usp*.sql files)
 
-Aggregate and rank total sales by city
+📊 Store Location Analysis
+Run the scripts in:
 
-Highlight underserved but high-demand areas
+bash
+Copy code
+src/store-location/
+🧪 Example Usage
+Add a product to auction:
+sql
+Copy code
+EXEC Auction.uspAddProductToAuction @ProductID = 870;
+Place a bid:
+sql
+Copy code
+EXEC Auction.uspTryBidProduct @ProductID = 870, @CustomerID = 30116, @BidAmount = 120.00;
+List all bids by a customer:
+sql
+Copy code
+EXEC Auction.uspListBidsOffersHistory @CustomerID = 30116;
+🤝 Contributing
+Contributions are welcome!
 
-📌 Final Recommendation
+Ways you can contribute:
 
-Based on sales activity and geographic distribution:
+Improve SQL scripts
 
-🏬 Recommended Cities to Open New Stores:
+Add performance optimizations
 
-Denver, Colorado
+Enhance documentation
 
-Raleigh, North Carolina
+Add visualizations (Tableau, Power BI, etc.)
 
-Both cities show strong demand and minimal conflict with existing partners.
+To contribute:
 
-📈 Project Outcomes
+Fork the repo
 
-A scalable, flexible auction system to clear excess inventory
+Create a feature branch
 
-Data-driven retail location decisions
+Submit a Pull Request
 
-SQL-centric implementation using stored procedures, schema design, and analytical queries
+📄 License
+This project is licensed under the MIT License.
+See the LICENSE file for details.
 
-Improved operational efficiency for Adventure Works
-
-📚 Tools & Technologies Used
-
-T-SQL / SQL Server
-
-AdventureWorks2014 Database
-
-Database Design (Schemas, Tables, Stored Procedures)
-
-Data Analysis & Business Logic Implementation
-
-📁 Repository Structure
-/src
-   /auction-tables.sql
-   /auction-stored-procedures.sql
-   /auction-config.sql
-   /store-location-analysis.sql
-
-/report
-   Report.pdf
-
-
-📎 References
-
-1.Microsoft AdventureWorks2014 Sample Database
-
-2.Azure SQL Database Documentation
+✨ Author
+MD Mijanul Haque
+Postgraduate Student in Data Science — Nova IMS
+GitHub: https://github.com/Mijaniub
 
