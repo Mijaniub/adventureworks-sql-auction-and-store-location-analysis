@@ -181,7 +181,7 @@ This project is licensed under the MIT License.
 See the LICENSE file for details.
 
 ✨ Author
-MD Mijanul Haque
-Postgraduate Student in Data Science — Nova IMS
+MD Mijanul Haque, 
+Postgraduate Student in Enterprise Data Science  and Analytics — Nova IMS
 GitHub: https://github.com/Mijaniub
 
