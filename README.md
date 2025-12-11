@@ -120,12 +120,10 @@ Data Analysis & Business Logic Implementation
 /report
    Report.pdf
 
-README.md
 
 📎 References
 
-Microsoft AdventureWorks2014 Sample Database
+1.Microsoft AdventureWorks2014 Sample Database
 
-Azure SQL Database Documentation
+2.Azure SQL Database Documentation
 
-MRNR 2025 Course Material
